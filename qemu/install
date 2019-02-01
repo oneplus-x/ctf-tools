@@ -1,0 +1,11 @@
+#!/bin/bash
+
+curl http://wiki.qemu-project.org/download/qemu-2.6.1.tar.bz2 | tar xvj
+cd qemu-2.6.1
+if [[ "$(python --version 2>&1)" =~ Python\ 3 ]]; then
+    ./configure "--prefix=$(dirname $PWD)" "--python=$(which python2)"
+else
+    ./configure "--prefix=$(dirname $PWD)"
+fi
+make -j $(nproc)
+make install
